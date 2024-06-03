@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { bookingReducer } from '../../entities/booking/model/slice/booking.slice.ts';
+import { bookingReducer } from '../../features/booking/slice/booking.slice.ts';
+import { StateSchema } from './state.schema.ts';
 
-export const store = configureStore({
-  reducer: {
-    booking: bookingReducer,
-  },
-});
+export const createReduxStore = (initialState?: StateSchema) =>
+  configureStore({
+    reducer: {
+      booking: bookingReducer,
+    },
+    preloadedState: initialState,
+  });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = ReturnType<typeof createReduxStore>['dispatch'];
