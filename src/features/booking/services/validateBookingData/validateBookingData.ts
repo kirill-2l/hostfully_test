@@ -11,8 +11,9 @@ const isOverlapping = (newBooking: Booking, bookings: Booking[]) => {
       const startDate = fromUnixTime(booking.startDate);
       const endDate = fromUnixTime(booking.endDate);
       return (
-        (newBookingStartDate >= startDate && newBookingStartDate <= endDate) ||
-        (newBookingEndDate >= startDate && newBookingEndDate <= endDate)
+        booking.id !== newBooking.id &&
+        ((newBookingStartDate >= startDate && newBookingStartDate <= endDate) ||
+          (newBookingEndDate >= startDate && newBookingEndDate <= endDate))
       );
     });
 };
@@ -26,8 +27,8 @@ export const validateBookingData = (
   }
 
   const errors: ValidateBookingError[] = [];
-  const isUpdate = bookings.some(booking => booking.id === newBooking.id);
-  if (!isUpdate && isOverlapping(newBooking, bookings)) {
+
+  if (isOverlapping(newBooking, bookings)) {
     errors.push(ValidateBookingError.OVERLAPPING_BOOKING);
   }
 

@@ -31,7 +31,6 @@ export const useCreateUpdateBooking = (
       propertyId: booking!.propertyId as string,
       propertyName: booking!.propertyName as string,
     };
-
     const error = validateBookingData(bookings, newBooking);
 
     setErrors(error);
